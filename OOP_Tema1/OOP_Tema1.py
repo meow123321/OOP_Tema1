@@ -17,7 +17,7 @@ def CreateMatrix(MyList, n):
 
 
 #This function will find the matrix dimension
-def MaxLenght(MyList, Maxi, Maxj, n):
+def MaxLenght(MyList, n):
     k = 0
     while k + 1 < int(n):
         Maxi = max(MyList[k][0], MyList[k+1][0])
@@ -28,18 +28,26 @@ def MaxLenght(MyList, Maxi, Maxj, n):
 
 # This function will print the full matrix
 def PrintMatrix(MyList, Maxi, Maxj):
-    p = 0
-    q = 0
-    while p < int(Maxi):
-        while q < int(Maxj):
-            if MyList[p][0] == p + 1 and MyList[p][1] == q + 1:
-                val_temp = MyList[p][2]
-                print(val_temp,', ')
-            else:
-                print(0,', ')
-            q = q + 1
-        print('\n')
-        p = p +1
+    k = 0
+    print('Am intrat in functie')
+    while k < len(MyList):
+        val_temp = MyList[k][2]
+        i = 1
+        while i <= int(Maxi):
+            j = 1
+            while j <= int(Maxj):
+                if MyList[k][0] == i and MyList[k][1] == j:
+                    print(val_temp, end = ' ')
+                else:
+                    print(0, end = ' ')
+                    print(MyList[k][0], i)
+                    print(MyList[k][1], j)
+  
+                j = j + 1
+            print('\n')
+            i = i +1
+        k += 1
+
 #This function will add two matrices
 def AddMatrix(ListA, ListB, ListAdd):
    MyTuple = ()
@@ -116,14 +124,39 @@ def TransMatrix(MyList, TransList):
         TransList.append(MyTuple)
         index = index + 1
     print(TransList)
-    
 
+
+def UnitMatrix(MyList, n):
+    i = 0
+    while i < int(n):
+        j = 0
+        while j < int(n):
+            if i == j :
+                MyTuple = (i, j, 1)
+                MyList.append(MyTuple)
+                print (1,  end =" ")
+            else:
+                print(0,  end =" ")
+            j += 1
+        print('\n')
+        i +=1
+    
+def NullMatrix(n):
+    i = 0
+    while i < int(n):
+        j = 0
+        while j < int(n):
+            print(0,  end =" ")
+            j += 1
+        print('\n')
+        i +=1
 
 A_matrix = []
 B_matrix = []
 Add_matrix = []
 Sub_matrix = []
 Transp_matrix = []
+Unit_Matrix = []
 max_i = 0
 max_j = 0
 
@@ -131,17 +164,30 @@ print('The numbers elements the first matrix will have: ')
 n = input()
 CreateMatrix(A_matrix, n)
 
-print('The numbers elements the second matrix will have: ')
-m = input()
-CreateMatrix(B_matrix, m)
 
-max_i, max_j = MaxLenght(A_matrix, max_i, max_j, n)
+max_i, max_j = MaxLenght(A_matrix, n)
 print('The matrix dimesion is: ', max_i, 'x', max_j)
 print('\n')
 
+PrintMatrix(A_matrix, max_i, max_j)
+
+print('Enter the dimension of the unit matrix')
+u = input()
+print('\n')
+UnitMatrix(Unit_Matrix,u)
+
+print('Null Matrix: ')
+NullMatrix(u)
+
+
+#print('The numbers elements the second matrix will have: ')
+#m = input()
+#CreateMatrix(B_matrix, m)
+
+
 #nu merge
-#PrintMatrix(A_matrix, max_i, max_j)
+
 #AddMatrix(A_matrix, B_matrix, Add_matrix)
 #SubMatrix(A_matrix, B_matrix, Sub_matrix)
 
-TransMatrix(A_matrix,Transp_matrix)
+#TransMatrix(A_matrix,Transp_matrix)
