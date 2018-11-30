@@ -11,10 +11,6 @@ def CreateMatrix(MyList, n):
         MyList.append(MyTuple)
         index = index + 1
         print('\n')
-    print(MyList)
-    print('\n')
-  
-
 
 #This function will find the matrix dimension
 def MaxLenght(MyList, n):
@@ -25,60 +21,69 @@ def MaxLenght(MyList, n):
         k = k + 1
     return Maxi, Maxj
 
-
 # This function will print the full matrix
-def PrintMatrix(MyList, Maxi, Maxj):
-    k = 0
-    print('Am intrat in functie')
-    while k < len(MyList):
-        val_temp = MyList[k][2]
-        i = 1
-        while i <= int(Maxi):
-            j = 1
-            while j <= int(Maxj):
-                if MyList[k][0] == i and MyList[k][1] == j:
-                    print(val_temp, end = ' ')
+def PrintMatrix(MyList, n):
+    Maxi, Maxj = MaxLenght(A_matrix, n)
+    i = 0
+    while i < int(Maxi):
+        j = 0
+        while j < int(Maxj):
+            for index in MyList:
+                if i == index[0]:
+                    if j == index[1]:
+                        print(index[2], end = ' ')
                 else:
                     print(0, end = ' ')
-                    print(MyList[k][0], i)
-                    print(MyList[k][1], j)
-  
-                j = j + 1
-            print('\n')
-            i = i +1
-        k += 1
+            j += 1
+        print('\n')
+        i += 1
+    return 0
 
 #This function will add two matrices
 def AddMatrix(ListA, ListB, ListAdd):
-   MyTuple = ()
    indexA = 0
    indexB = 0
-   indexAdd = 0
    while indexA < len(ListA):
+        indexB = 0
         while indexB < len(ListB):
-            while indexAdd < len(ListAdd):
-                if ListA[indexA][0] == ListB[indexB][0] and ListA[indexA][1] == ListB[indexB][1] :
-                    Add_val = ListA[indexA][2] + ListA[indexB][2]
-                    i = ListA[indexA][0]
-                    j = ListA[indexB][1]
-                    MyTuple = (i, j, Add_val)
+            if ListA[indexA][0] == ListB[indexB][0] and ListA[indexA][1] == ListB[indexB][1] :
+                Add_val = int(ListA[indexA][2]) + int(ListB[indexB][2])
+                i = ListA[indexA][0]
+                j = ListA[indexA][1]
+                MyTuple = (i, j, Add_val)
+                ListAdd.append(MyTuple)
+                print('if: ', MyTuple, '\n')
+                ListB.remove(ListB[indexB])
+                print(ListB)
+            else:
+                Add_val = ListA[indexA][2]
+                i = ListA[indexA][0]
+                j = ListA[indexA][1]
+                MyTuple = (i, j, Add_val)
+                if MyTuple not in ListAdd:
                     ListAdd.append(MyTuple)
-                else:
-                    Add_val = ListA[indexA][2]
-                    i = ListA[indexA][0]
-                    j = ListA[indexA][1]
-                    MyTuple = (i, j, Add_val)
-                    ListAdd.append(MyTuple)
-                if ListAdd[indexAdd][0] != ListB[indexB][0] and ListAdd[indexAdd][1] != ListB[indexB][1]:
-                    Add_val = ListB[indexB][2]
-                    i = ListB[indexB][0]
-                    j = ListB[indexB][1]
-                    MyTuple = (i, j, Add_val)
-                    ListAdd.append(MyTuple)
-                indexAdd = indexAdd + 1
-            indexB = indexB + 1
-        indexA = indexA + 1 
-        print(ListAdd)
+                    print('sunt in else', MyTuple)
+            indexB += 1
+        indexA += 1
+        indexB = 0
+        while indexB < len(ListB):
+            Add_val = ListB[indexB][2]
+            i = ListB[indexB][0]
+            j= ListB[indexB][1]
+            MyTuple = (i, j, Add_val)
+            ListAdd.append(MyTuple)
+            print('ifB: ', MyTuple, '\n')
+            indexB += 1
+        i = 0
+        while i < len(ListAdd):
+            j = 0
+            while j < len(ListAdd):
+                if ListAdd[i][0] == ListAdd[j][0] and ListAdd[i][1] == ListAdd[j][1]:
+                    if i < j:
+                        ListAdd.remove(ListAdd[i])
+                    else:
+                        ListAdd.remove(ListAdd[j])
+        print('asta este lista: ', ListAdd)
 
   #This function will make substraction on two matrices  
 def SubMatrix(ListA, ListB, ListSub):
@@ -112,7 +117,7 @@ def SubMatrix(ListA, ListB, ListSub):
         indexA = indexA + 1 
         print(ListSub)
 
-#this function will print the transposed matrix as a list
+#This function will print the transposed matrix as a list
 def TransMatrix(MyList, TransList):
     MyTuple = ()
     index = 0
@@ -125,7 +130,7 @@ def TransMatrix(MyList, TransList):
         index = index + 1
     print(TransList)
 
-
+#This function careate the unit matrix and print it
 def UnitMatrix(MyList, n):
     i = 0
     while i < int(n):
@@ -140,7 +145,8 @@ def UnitMatrix(MyList, n):
             j += 1
         print('\n')
         i +=1
-    
+
+ #This function will create a null matrix and print it
 def NullMatrix(n):
     i = 0
     while i < int(n):
@@ -150,6 +156,20 @@ def NullMatrix(n):
             j += 1
         print('\n')
         i +=1
+
+#This functuin will search for a value useing the specified indices
+def SearchValue(MyList, index_i, index_j, n):
+    maxi, maxj = MaxLenght(A_matrix, n)
+    if int(maxi) < int(index_i) or int(maxj) < int(index_j):
+        print('The indices have exceeded the size of the matrix')
+        return 0
+    for index in MyList:
+        if index_i == index[0]:
+            if index_j == index[1]:
+                print('We found the element', end = ' ')
+                print(index[2], '\n')
+                return index[2]
+                
 
 A_matrix = []
 B_matrix = []
@@ -163,13 +183,27 @@ max_j = 0
 print('The numbers elements the first matrix will have: ')
 n = input()
 CreateMatrix(A_matrix, n)
+print(A_matrix)
+
+PrintMatrix(A_matrix, n)
+print('\n')
+
+print('Enter the indices to look for:')
+i = input('First index: ')
+j = input('The second index: ')
+SearchValue(A_matrix, i, j, n)
 
 
 max_i, max_j = MaxLenght(A_matrix, n)
 print('The matrix dimesion is: ', max_i, 'x', max_j)
 print('\n')
 
-PrintMatrix(A_matrix, max_i, max_j)
+print('The numbers elements the second matrix will have: ')
+m = input()
+CreateMatrix(B_matrix, m)
+
+
+AddMatrix(A_matrix, B_matrix, Add_matrix)
 
 print('Enter the dimension of the unit matrix')
 u = input()
@@ -179,15 +213,10 @@ UnitMatrix(Unit_Matrix,u)
 print('Null Matrix: ')
 NullMatrix(u)
 
-
-#print('The numbers elements the second matrix will have: ')
-#m = input()
-#CreateMatrix(B_matrix, m)
+print('The transpused matrix')
+TransMatrix(A_matrix,Transp_matrix)
 
 
 #nu merge
-
-#AddMatrix(A_matrix, B_matrix, Add_matrix)
 #SubMatrix(A_matrix, B_matrix, Sub_matrix)
 
-#TransMatrix(A_matrix,Transp_matrix)
